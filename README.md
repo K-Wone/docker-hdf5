@@ -6,38 +6,49 @@
 
 # How to use
 
-```bash
-docker build -t my-repo/hdf5 .
-docker run -it --rm my-repo/hdf5
-```
+1. [Install docker engine](https://docs.docker.com/install/)
 
-A bunch of build-time arguments can be used to build HDF5.
+2. Pull the image
+  ```bash
+  docker pull leavesask/hdf5:<tag>
+  ```
+
+3. Run the image interactively
+  ```bash
+  docker run -it --rm leavesask/hdf5:<tag>
+  ```
+
+# How to build
+
+There are a bunch of build-time arguments you can use to build the HDF5 image.
 
 ```bash
-docker build -t my-repo/hdf5 \
+docker build \
         --build-arg IMAGE_NAME="leavesask/gcc:latest" \
         --build-arg HDF5_VMAJOR="1.10" \
         --build-arg HDF5_VMINOR="5" \
-        --build-arg HDF5_CONFIGURE_ENV="CC=gcc CXX=g++" \
-        --build-arg HDF5_OPTIONS="--enable-cxx"
+        --build-arg HDF5_CC="gcc" \
+        --build-arg HDF5_CXX="g++" \
+        --build-arg HDF5_OPTIONS="--enable-cxx" \
+        -t my-repo/hdf5 .
 ```
 
 Arguments and their defaults are listed below.
 
 - `BASE_IMAGE`: IMAGE_NAME\[:TAG\] (default=`leavesask/gompi:latest`)
-  - This is the image we used for all of the stages.
-  - It is supposed to a toolchain containing compilers.
+  - This is the base image for all of the stages.
+  - It is supposed to be a toolchain containing compilers.
 
 - `HDF5_VMAJOR`: X.X (default=`1.10`)
 
 - `HDF5_VMINOR`: X (default=`5`)
 
-- `HDF5_CONFIGURE_ENV`: key=value (default=`CC=mpicc CXX=mpicxx`)
-  - Environment variables needed to configure the installation.
+- `HDF5_CC`: value (default=`mpicc`)
+- `HDF5_CXX`: value (default=`mpicxx`)
 
-- `HDF5_OPTIONS`: (default=`--enable-cxx --enable-parallel --enable-unsupported`)
+- `HDF5_OPTIONS`: option\[=value\] (default=`--enable-cxx --enable-parallel --enable-unsupported`)
   - Options needed to configure the installation.
   - The default installation path is `/opt/hdf5/${HDF5_VERSION}` so that option `--prefix` is unnecessary.
 
-- `USER_NAME`: user (default=`root`)
+- `USER_NAME`: value (default=`root`)
   - This must be an existing user in the base image.

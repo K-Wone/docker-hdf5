@@ -21,8 +21,11 @@ ENV HDF5_VMAJOR=${HDF5_VMAJOR}
 ARG HDF5_VMINOR="5"
 ENV HDF5_VMINOR=${HDF5_VMINOR}
 
-ARG HDF5_CONFIGURE_ENV="CC=mpicc CXX=mpicxx"
-ENV HDF5_CONFIGURE_ENV=${HDF5_CONFIGURE_ENV}
+ARG HDF5_CC="mpicc"
+ENV HDF5_CC=${HDF5_CC}
+
+ARG HDF5_CXX="mpicxx"
+ENV HDF5_CXX=${HDF5_CXX}
 
 ARG HDF5_OPTIONS="--enable-cxx --enable-parallel --enable-unsupported"
 ENV HDF5_OPTIONS=${HDF5_OPTIONS}
@@ -43,8 +46,9 @@ RUN set -eux; \
       \
       # configure HDF5 installation with specified env and options
       ./configure \
+                  CC=${HDF5_CC} \
+                  CXX=${HDF5_CXX} \
                   --prefix=${HDF5_PREFIX} \
-                  ${HDF5_CONFIGURE_ENV} \
                   ${HDF5_OPTIONS} \
       ; \
       make -j "$(nproc)"; \
