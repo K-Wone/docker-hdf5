@@ -1,8 +1,8 @@
 # Supported tags
 
-- `1.10.5-openmpi-4, 1.10.5-openmpi-3`
-- `1.10.5-gcc-9, 1.10.5-gcc-8, 1.10.5-gcc-7`
-- `1.10.5-clang-9`
+- `1.10.5-openmpi, 1.10.5-openmpi-4, 1.10.5-openmpi-3`
+- `1.10.5-gcc, 1.10.5-gcc-9, 1.10.5-gcc-8, 1.10.5-gcc-7`
+- `1.10.5-clang, 1.10.5-clang-9`
 
 # How to use
 
@@ -24,7 +24,7 @@ There are a bunch of build-time arguments you can use to build the HDF5 image.
 
 ```bash
 docker build \
-        --build-arg IMAGE_NAME="leavesask/gcc:latest" \
+        --build-arg BASE_IMAGE="leavesask/gcc:latest" \
         --build-arg HDF5_VMAJOR="1.10" \
         --build-arg HDF5_VMINOR="5" \
         --build-arg HDF5_CC="gcc" \
@@ -35,7 +35,7 @@ docker build \
 
 Arguments and their defaults are listed below.
 
-- `BASE_IMAGE`: IMAGE_NAME\[:TAG\] (default=`leavesask/gompi:latest`)
+- `BASE_IMAGE`: name\[:tag\] (default=`leavesask/gompi:latest`)
   - This is the base image for all of the stages.
   - It is supposed to be a toolchain containing compilers.
 
@@ -50,5 +50,5 @@ Arguments and their defaults are listed below.
   - Options needed to configure the installation.
   - The default installation path is `/opt/hdf5/${HDF5_VERSION}` so that option `--prefix` is unnecessary.
 
-- `USER_NAME`: value (default=`root`)
+- `USER_NAME`: value (default=`one`)
   - This must be an existing user in the base image.

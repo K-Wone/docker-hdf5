@@ -2,6 +2,8 @@
 ARG BASE_IMAGE="leavesask/gompi:latest"
 FROM ${BASE_IMAGE} AS builder
 
+USER root
+
 # install basic buiding tools
 RUN set -eu; \
       \
@@ -34,15 +36,17 @@ ENV HDF5_VERSION="${HDF5_VMAJOR}.${HDF5_VMINOR}"
 ENV HDF5_PREFIX="/opt/hdf5/${HDF5_VERSION}"
 ENV HDF5_TARBALL="hdf5-${HDF5_VERSION}.tar.gz"
 
-# build and install HDF5
+# stage 1.1: download HDF5 source
 WORKDIR /tmp
 RUN set -eux; \
       \
       # checksums are not provided due to the build-time arguments HDF5_VERSION
       wget "https://support.hdfgroup.org/ftp/HDF5/releases/hdf5-${HDF5_VMAJOR}/hdf5-${HDF5_VERSION}/src/${HDF5_TARBALL}"; \
-      tar -xzf ${HDF5_TARBALL}; \
-      \
-      cd hdf5-${HDF5_VERSION}; \
+      tar -xzf ${HDF5_TARBALL}
+
+# stage 1.2: build and install HDF5
+WORKDIR /tmp/hdf5-${HDF5_VERSION}
+RUN set -eux; \
       \
       # configure HDF5 installation with specified env and options
       ./configure \
@@ -60,6 +64,8 @@ RUN set -eux; \
 # stage 2: build the runtime environment
 ARG BASE_IMAGE
 FROM ${BASE_IMAGE}
+
+USER root
 
 # install basic dev tools
 RUN set -eu; \
@@ -85,5 +91,7 @@ ENV LIBRARY_PATH="${HDF5_PATH}/lib:${LIBRARY_PATH}"
 ENV LD_LIBRARY_PATH="${HDF5_PATH}/lib:${LD_LIBRARY_PATH}"
 
 # transfer control to the default user
-ARG USER_NAME=root
+ARG USER_NAME=one
 USER ${USER_NAME}
+
+WORKDIR /home/${USER_NAME}
