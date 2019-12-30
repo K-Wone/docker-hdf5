@@ -6,9 +6,9 @@
 
 # Supported tags
 
-- `1.10.5-openmpi, 1.10.5-openmpi-4, 1.10.5-openmpi-3`
-- `1.10.5-gcc, 1.10.5-gcc-9, 1.10.5-gcc-8, 1.10.5-gcc-7`
-- `1.10.5-clang, 1.10.5-clang-9`
+- `1.10.5-gompi, 1.10.5-gompi-4.0.0, 1.10.5-gompi-3.1.5`
+- `1.10.5-gcc, 1.10.5-gcc-9.2.0, 1.10.5-gcc-8.3.0, 1.10.5-gcc-7.3.0`
+- `1.10.5-clang`
 
 # How to use
 
@@ -30,20 +30,23 @@ There are a bunch of build-time arguments you can use to build the HDF5 image.
 
 ```bash
 docker build \
-        --build-arg BASE_IMAGE="leavesask/gcc:latest" \
+        --build-arg BASE_IMAGE="leavesask/gcc" \
+        --build-arg BASE_TAG="latest" \
         --build-arg HDF5_VMAJOR="1.10" \
         --build-arg HDF5_VMINOR="5" \
         --build-arg HDF5_CC="gcc" \
         --build-arg HDF5_CXX="g++" \
         --build-arg HDF5_OPTIONS="--enable-cxx" \
-        -t my-repo/hdf5 .
+        -t my-repo/hdf5:latest .
 ```
 
 Arguments and their defaults are listed below.
 
-- `BASE_IMAGE`: name\[:tag\] (default=`leavesask/gompi:latest`)
+- `BASE_IMAGE`: value (default=`leavesask/gompi`)
   - This is the base image for all of the stages.
   - It is supposed to be a toolchain containing compilers.
+
+- `BASE_TAG`: value (default=`latest`)
 
 - `HDF5_VMAJOR`: X.X (default=`1.10`)
 

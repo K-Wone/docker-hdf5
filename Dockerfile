@@ -62,6 +62,8 @@ ARG BASE_IMAGE
 ARG BASE_TAG
 FROM ${BASE_IMAGE}:${BASE_TAG}
 
+LABEL maintainer="Wang An <wangan.cs@gmail.com>"
+
 USER root
 
 # install basic dev tools
