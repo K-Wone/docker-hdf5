@@ -1,6 +1,6 @@
 [![Layers](https://images.microbadger.com/badges/image/leavesask/hdf5.svg)](https://microbadger.com/images/leavesask/hdf5)
 [![Version](https://images.microbadger.com/badges/version/leavesask/hdf5.svg)](https://hub.docker.com/repository/docker/leavesask/hdf5)
-[![Commit](https://images.microbadger.com/badges/commit/leavesask/hdf5.svg)](https://github.com/K-Wone/docker-openmpi)
+[![Commit](https://images.microbadger.com/badges/commit/leavesask/hdf5.svg)](https://github.com/K-Wone/docker-hdf5)
 [![Docker Pulls](https://img.shields.io/docker/pulls/leavesask/hdf5?color=informational)](https://hub.docker.com/repository/docker/leavesask/hdf5)
 [![Automated Build](https://img.shields.io/docker/automated/leavesask/hdf5)](https://hub.docker.com/repository/docker/leavesask/hdf5)
 
@@ -26,7 +26,25 @@
 
 # How to build
 
-There are a bunch of build-time arguments you can use to build the HDF5 image.
+## make
+
+There are a bunch of build-time arguments you can use to build the image.
+
+It is hightly recommended that you build the image with `make`.
+
+```bash
+# Build an image for HDF5 1.10.5
+make
+
+# Build and publish the image
+make release
+```
+
+Check `Makefile` for more options.
+
+## docker build
+
+As an alternative, you can build the image with `docker build` command.
 
 ```bash
 docker build \
@@ -37,6 +55,8 @@ docker build \
         --build-arg HDF5_CC="gcc" \
         --build-arg HDF5_CXX="g++" \
         --build-arg HDF5_OPTIONS="--enable-cxx" \
+        --build-arg BUILD_DATE=`date -u +"%Y-%m-%dT%H:%M:%SZ"` \
+        --build-arg VCS_REF=`git rev-parse --short HEAD` \
         -t my-repo/hdf5:latest .
 ```
 

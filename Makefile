@@ -24,11 +24,12 @@ USER_NAME    ?= one
 
 # Append a suffix to the tag if the version number of toolchain
 # is specified
-TAG_SUFFIX := $(lastword $(subst /, ,$(BASE_IMAGE)))
+DOCKER_REPO       := $(lastword $(subst /, ,$(BASE_IMAGE)))
+DOCKER_TAG_SHORT  := $(DOCKER_TAG)-$(DOCKER_REPO)
+DOCKER_TAG        := $(DOCKER_TAG)-$(DOCKER_REPO)
 ifneq ($(BASE_TAG),latest)
-    TAG_SUFFIX := $(TAG_SUFFIX)-$(BASE_TAG)
+    DOCKER_TAG := $(DOCKER_TAG)-$(BASE_TAG)
 endif
-DOCKER_TAG := $(DOCKER_TAG)-$(TAG_SUFFIX)
 
 BUILD_DATE=$(shell date -u +"%Y-%m-%dT%H:%M:%SZ")
 VCS_URL=$(shell git config --get remote.origin.url)
@@ -69,6 +70,11 @@ docker_push:
 	# Push to DockerHub
 	docker push $(DOCKER_IMAGE):$(DOCKER_TAG)
 	docker push $(DOCKER_IMAGE):latest
+
+	# Tag image with a short name
+	[[ "$(DOCKER_TAG_SHORT)" != "$(DOCKER_TAG)" ]] && \
+    docker tag $(DOCKER_IMAGE):$(DOCKER_TAG) $(DOCKER_IMAGE):$(DOCKER_TAG_SHORT) && \
+	docker push $(DOCKER_IMAGE):$(DOCKER_TAG_SHORT)
 
 output:
 	@echo Docker Image: $(DOCKER_IMAGE):$(DOCKER_TAG)
