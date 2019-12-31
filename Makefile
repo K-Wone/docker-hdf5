@@ -72,9 +72,10 @@ docker_push:
 	docker push $(DOCKER_IMAGE):latest
 
 	# Tag image with a short name
-	[[ "$(DOCKER_TAG_SHORT)" != "$(DOCKER_TAG)" ]] && \
-    docker tag $(DOCKER_IMAGE):$(DOCKER_TAG) $(DOCKER_IMAGE):$(DOCKER_TAG_SHORT) && \
-	docker push $(DOCKER_IMAGE):$(DOCKER_TAG_SHORT)
+	if [[ "$(DOCKER_TAG_SHORT)" != "$(DOCKER_TAG)" ]]; then \
+      docker tag $(DOCKER_IMAGE):$(DOCKER_TAG) $(DOCKER_IMAGE):$(DOCKER_TAG_SHORT) && \
+      docker push $(DOCKER_IMAGE):$(DOCKER_TAG_SHORT); \
+    fi
 
 output:
 	@echo Docker Image: $(DOCKER_IMAGE):$(DOCKER_TAG)
