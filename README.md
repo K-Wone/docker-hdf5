@@ -1,6 +1,7 @@
 [![Layers](https://images.microbadger.com/badges/image/leavesask/hdf5.svg)](https://microbadger.com/images/leavesask/hdf5)
 [![Version](https://images.microbadger.com/badges/version/leavesask/hdf5.svg)](https://hub.docker.com/repository/docker/leavesask/hdf5)
 [![Commit](https://images.microbadger.com/badges/commit/leavesask/hdf5.svg)](https://github.com/K-Wone/docker-hdf5)
+[![License](https://images.microbadger.com/badges/license/leavesask/hdf5.svg)](https://github.com/K-Wone/docker-hdf5)
 [![Docker Pulls](https://img.shields.io/docker/pulls/leavesask/hdf5?color=informational)](https://hub.docker.com/repository/docker/leavesask/hdf5)
 [![Automated Build](https://img.shields.io/docker/automated/leavesask/hdf5)](https://hub.docker.com/repository/docker/leavesask/hdf5)
 

@@ -105,6 +105,7 @@ ARG VCS_URL
 LABEL org.label-schema.build-date=${BUILD_DATE} \
       org.label-schema.name="HDF5 docker image" \
       org.label-schema.description="A lightweight image for HDF5" \
+      org.label-schema.license="MIT" \
       org.label-schema.vcs-ref=${VCS_REF} \
       org.label-schema.vcs-url=${VCS_URL} \
       org.label-schema.schema-version="1.0"
