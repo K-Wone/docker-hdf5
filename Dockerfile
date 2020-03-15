@@ -92,6 +92,16 @@ ENV LD_LIBRARY_PATH="${HDF5_PATH}/lib:${LD_LIBRARY_PATH}"
 
 # transfer control to the default user
 ARG USER_NAME=one
+
+# create the first user
+RUN set -eu; \
+      \
+      if ! id -u ${USER_NAME} > /dev/null 2>&1; then \
+      adduser -D ${USER_NAME}; \
+      \
+      echo "${USER_NAME} ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers; \
+      fi
+
 USER ${USER_NAME}
 
 WORKDIR /home/${USER_NAME}
